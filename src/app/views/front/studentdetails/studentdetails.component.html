@@ -1,0 +1,15 @@
+<div class="w3-main" style="margin-left:340px;margin-right:40px">
+    <div class="w3-container" id="contact" style="margin-top:75px">
+        <h1 class="w3-xxxlarge w3-text-red"><b>Student details</b></h1>
+        <hr style="width:50px;border:5px solid red" class="w3-round">
+        <ul *ngIf="dataStudent">
+            <li>{{dataStudent.firstname}}</li>
+            <li>{{dataStudent.lastname}}</li>
+
+            <li>{{dataStudent.email}}</li>
+        </ul>
+
+        <div class="alert alert-danger" *ngIf="!dataStudent" >We don't have this student in our database</div>
+          
+      </div>
+    </div>

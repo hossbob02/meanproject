@@ -1,0 +1,157 @@
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">All students</h6>
+        </div>
+          
+        <div class="card-body">
+            <a routerLink="/admin/addstudent" style="float: right;" class="btn btn-primary">Add student</a>
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>FirstName</th>
+                            <th>Lastname</th>
+                            <th>Age</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>FirstName</th>
+                            <th>Lastname</th>
+                            <th>Age</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+
+                        <tr *ngFor="let item of dataArray;index as i">
+                            <td>{{item.firstname}}</td>
+                            <td>{{item.lastname}}</td>
+                            <td>{{item.age}}</td>
+                            <td>{{item.phone}}</td>
+                            <td>{{item.email}}</td>
+                            <td>
+                                <button class="btn btn-success" (click)="getdata(item.firstname,item.lastname,item.age,item.phone,item.email,item._id)" data-toggle="modal" data-target="#exampleModal">Update</button>
+                                <button class="btn btn-info" (click)="details(item._id)">Details</button>
+                                <button class="btn btn-danger" (click)="delete(item._id,i)">Delete</button>
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- form update start here -->
+          <form #f="ngForm" (ngSubmit)="updatenewstudent(f)">
+            <!-- firstName validation start here -->
+                <div class="form-group">
+            
+                  <label for="exampleFormControlInput1">Firstname</label>
+                  <input type="text" class="form-control" placeholder="firstName" [(ngModel)]="dataStudent.firstname" required name="firstname" #firstname="ngModel" ngModel minlength="2" maxlength="20">
+                </div>
+                <div class="alert alert-danger" *ngIf="firstname.errors?.required && firstname.touched">
+                  FirstName is required
+                </div>
+                <div class="alert alert-danger" *ngIf="firstname.errors?.minlength && firstname.touched">
+                  FirstName must be minimum 2 caractere
+                </div>
+            <!-- lastName validation end here -->
+            
+            <!-- lastName validation start here -->
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">lastname</label>
+                    <input type="text" class="form-control" placeholder="lastname" [(ngModel)]="dataStudent.lastname" required name="lastname" #lastname="ngModel" minlength="2" maxlength="20" ngModel>
+                  </div>
+                  <div class="alert alert-danger" *ngIf="lastname.errors?.required && lastname.touched">
+                    lastname is required
+                  </div>
+                  <div class="alert alert-danger" *ngIf="lastname.errors?.minlength && lastname.touched">
+                    lastname must be minimum 2 caractere
+                  </div>
+            <!-- lastName validation end here -->
+            
+            <!-- Email validation start here -->
+            
+                  <div class="form-group">
+                    <label for="exampleFormControlInput1">email</label>
+                    <input type="email" class="form-control" placeholder="email" [(ngModel)]="dataStudent.email" email required name="email" #email="ngModel" ngModel>
+                  </div>
+                  <div class="alert alert-danger" *ngIf="email.errors?.required && email.touched">
+                    email is required
+                  </div>
+            
+                  <div class="alert alert-danger" *ngIf="email.errors?.email && email.touched">
+                    the input must be email not string
+                  </div>
+            <!-- Email validation end here -->
+            
+            <!-- age validation start here -->
+                  <div class="form-group">
+                    <label for="exampleFormControlInput1">age</label>
+                    <input type="number" class="form-control" placeholder="age" [(ngModel)]="dataStudent.age" required name="age" #age="ngModel" ngModel>
+                  </div>
+                  <div class="alert alert-danger" *ngIf="age.errors?.required && age.touched">
+                    age is required
+                  </div>
+             <!-- age validation end here -->     
+            
+            
+             <!-- Phone validation start here -->
+            
+                  <div class="form-group">
+                    <label for="exampleFormControlInput1">Phone</label>
+                    <input type="number" class="form-control" placeholder="phone" [(ngModel)]="dataStudent.phone" required name="phone" #phone="ngModel" ngModel>
+                  </div>
+                  <div class="alert alert-danger" *ngIf="phone.errors?.required && phone.touched">
+                    phone is required
+                  </div>
+            <!-- Phone validation end here -->
+             
+                <div class="alert alert-success" *ngIf="messageSuccess">
+                    {{messageSuccess}}
+                </div>      
+
+               <button class="btn btn-primary" [disabled]="f.invalid">Update student</button>
+              </form>
+
+
+
+          <!-- form update end here -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
